@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import topics from '@data/topics';
 import DataStructureCard from '@components/DataStructureCard';
+import { Link } from 'react-router-dom';
 import { getProgress } from '@utils/storage';
 
 export default function Home() {
@@ -19,8 +20,8 @@ export default function Home() {
               Interactive simulations, Mermaid diagrams, concise notes, and quizzes — all in one place.
             </p>
             <div className="mt-4 flex gap-2">
-              <a href="/visualizer" className="btn-primary">Open Visualizer</a>
-              <a href="/quiz" className="btn-secondary">Take a Quiz</a>
+              <Link to="/visualizer" className="btn-primary">Open Visualizer</Link>
+              <Link to="/quiz" className="btn-secondary">Take a Quiz</Link>
             </div>
           </div>
           <div className="w-full md:w-80">

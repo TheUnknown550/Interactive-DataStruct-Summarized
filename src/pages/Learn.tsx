@@ -18,7 +18,7 @@ import GraphVisualizer from '@components/Visualizer/GraphVisualizer';
 import TrieVisualizer from '@components/Visualizer/TrieVisualizer';
 import ArrayComparison from '@components/ArrayComparison';
 
-const summaryUrl = '/content/summary.md';
+const summaryUrl = `${import.meta.env.BASE_URL}content/summary.md`;
 
 function useSummarySection(slug: string) {
   const [content, setContent] = useState<string | null>(null);

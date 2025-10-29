@@ -5,6 +5,10 @@ export type Topic = {
   description: string;
   operations: string[];
   diagram: string; // Mermaid code
+  how?: string; // how it works summary
+  complexity?: Record<string, string>; // e.g., { Access: 'O(1)', Insert: 'O(n)' }
+  useCases?: string[];
+  considerations?: string[];
 };
 
 const topics: Topic[] = [
@@ -15,6 +19,10 @@ const topics: Topic[] = [
     description: 'Contiguous memory structure with O(1) access by index.',
     operations: ['access', 'insert', 'delete', 'search', 'iterate'],
     diagram: 'flowchart LR\nA[Index]-->B[Value]',
+    how: 'Fixed-size contiguous block; index math gives direct access to elements.',
+    complexity: { Access: 'O(1)', Search: 'O(n)', Insert: 'O(n) (middle), O(1) amortized at end', Delete: 'O(n) (middle)', Space: 'O(n)' },
+    useCases: ['Random access', 'Static collections', 'Cache-friendly iterations'],
+    considerations: ['Inserts/deletes shift elements', 'Resizing can be costly'],
   },
   {
     slug: 'linked-list',
@@ -23,6 +31,10 @@ const topics: Topic[] = [
     description: 'Nodes pointing to next nodes, efficient inserts/removals.',
     operations: ['insertHead', 'insertTail', 'delete', 'search', 'traverse'],
     diagram: 'flowchart LR\nA((1))-->|next|B((2))-->|next|C((3))',
+    how: 'Each node stores data and pointer(s); elements are scattered in memory.',
+    complexity: { Access: 'O(n)', Search: 'O(n)', Insert: 'O(1) at head/tail (with tail ptr)', Delete: 'O(1) with pointer to node', Space: 'O(n)' },
+    useCases: ['Frequent insert/delete', 'Implement stacks/queues', 'Low fragmentation moves'],
+    considerations: ['Poor cache locality', 'No random indexing'],
   },
   {
     slug: 'stack',
@@ -31,6 +43,10 @@ const topics: Topic[] = [
     description: 'LIFO structure supporting push/pop on the top.',
     operations: ['push', 'pop', 'peek', 'isEmpty'],
     diagram: 'flowchart TB\nA[top]-->B[item]\nB-->C[item]\nC-->D[bottom]',
+    how: 'Last-In-First-Out using array or linked list; operate at one end.',
+    complexity: { Push: 'O(1)', Pop: 'O(1)', Peek: 'O(1)', Search: 'O(n)', Space: 'O(n)' },
+    useCases: ['Call stack', 'Undo/redo', 'DFS'],
+    considerations: ['Only top accessible'],
   },
   {
     slug: 'queue',
@@ -39,6 +55,10 @@ const topics: Topic[] = [
     description: 'FIFO structure with enqueue at rear, dequeue at front.',
     operations: ['enqueue', 'dequeue', 'peek', 'isEmpty'],
     diagram: 'flowchart LR\nfront-->A[item]-->B[item]-->rear',
+    how: 'First-In-First-Out using circular array or linked list.',
+    complexity: { Enqueue: 'O(1)', Dequeue: 'O(1)', Peek: 'O(1)', Space: 'O(n)' },
+    useCases: ['Scheduling', 'BFS', 'Rate limiting'],
+    considerations: ['Bounded capacity requires handling overflow'],
   },
   {
     slug: 'tree',
@@ -47,6 +67,10 @@ const topics: Topic[] = [
     description: 'Hierarchical structure with parent-child relationships.',
     operations: ['traverse', 'insert', 'delete', 'search'],
     diagram: 'graph TD\nA-->B\nA-->C\nB-->D\nB-->E',
+    how: 'Acyclic hierarchy; traversal visits nodes via parent-child links.',
+    complexity: { Search: 'varies', Insert: 'varies', Delete: 'varies', Space: 'O(n)' },
+    useCases: ['Hierarchies', 'Parsers', 'Indexes'],
+    considerations: ['Choose a balanced variant for performance'],
   },
   {
     slug: 'bst',
@@ -55,6 +79,10 @@ const topics: Topic[] = [
     description: 'Binary tree with ordered keys enabling O(log n) average search.',
     operations: ['insert', 'search', 'delete', 'inorder'],
     diagram: 'graph TD\n  A((8))-->B((3))\n  A-->C((10))\n  B-->D((1))\n  B-->E((6))',
+    how: 'Left subtree < node < right subtree. Inorder traversal yields sorted order.',
+    complexity: { Search: 'O(log n) avg, O(n) worst', Insert: 'O(log n) avg, O(n) worst', Delete: 'O(log n) avg, O(n) worst', Space: 'O(n)' },
+    useCases: ['Ordered sets/maps', 'Range queries (inorder)'],
+    considerations: ['Degenerates without balancing'],
   },
   {
     slug: 'heap',
@@ -63,6 +91,10 @@ const topics: Topic[] = [
     description: 'Complete binary tree maintaining heap property (min/max).',
     operations: ['insert', 'extract', 'heapify'],
     diagram: 'graph TD\nA((1))-->B((3))\nA-->C((5))',
+    how: 'Array-backed complete tree; parent smaller (min-heap) than children.',
+    complexity: { Access: 'O(1) to min/max', Insert: 'O(log n)', Extract: 'O(log n)', Search: 'O(n)', Space: 'O(n)' },
+    useCases: ['Priority queues', 'Dijkstra/Prim', 'Top-K'],
+    considerations: ['No fast search by key'],
   },
   {
     slug: 'graph',
@@ -71,6 +103,10 @@ const topics: Topic[] = [
     description: 'Vertices connected by edges, directed or undirected.',
     operations: ['addVertex', 'addEdge', 'BFS', 'DFS'],
     diagram: 'graph LR\nA--B\nA--C\nB--D\nC--D',
+    how: 'Adjacency list or matrix to store connections among vertices.',
+    complexity: { Traverse: 'O(V+E)', Search: 'O(V+E)', Space: 'O(V+E)' },
+    useCases: ['Networks', 'Dependency graphs', 'Routing'],
+    considerations: ['Representation choice affects performance'],
   },
   {
     slug: 'hash',
@@ -79,6 +115,10 @@ const topics: Topic[] = [
     description: 'Key-value store with hashing for fast average access.',
     operations: ['put', 'get', 'delete'],
     diagram: 'flowchart LR\nK[key]-->H[hash]\nH-->B[bucket]',
+    how: 'Hash function maps keys to buckets; collisions handled by chaining or probing.',
+    complexity: { Get: 'O(1) avg, O(n) worst', Put: 'O(1) avg, O(n) worst', Delete: 'O(1) avg, O(n) worst', Space: 'O(n)' },
+    useCases: ['Dictionaries', 'Caches', 'Indexing by key'],
+    considerations: ['Good hash + load factor needed'],
   },
   {
     slug: 'trie',
@@ -87,6 +127,10 @@ const topics: Topic[] = [
     description: 'Prefix tree storing strings efficiently for prefix queries.',
     operations: ['insert', 'search', 'startsWith'],
     diagram: 'graph TD\nroot-->a\nroot-->b\na-->at\na-->an',
+    how: 'Each edge is a character; path spells the string. Nodes may mark word end.',
+    complexity: { Insert: 'O(L)', Search: 'O(L)', Prefix: 'O(L)', Space: 'O(ALPHABET*L unique)' },
+    useCases: ['Autocomplete', 'Spell checkers', 'Prefix queries'],
+    considerations: ['High memory for sparse data'],
   },
   {
     slug: 'avl',
@@ -95,6 +139,10 @@ const topics: Topic[] = [
     description: 'Self-balancing BST with rotations to keep height O(log n).',
     operations: ['insert', 'rotate', 'search', 'inorder'],
     diagram: 'graph TD\n  A((30))-->B((20))\n  A-->C((40))\n  B-->D((10))\n  B-->E((25))',
+    how: 'Maintains balance factor (heights) and performs rotations on insert/delete.',
+    complexity: { Search: 'O(log n)', Insert: 'O(log n)', Delete: 'O(log n)', Space: 'O(n)' },
+    useCases: ['Ordered sets/maps with guaranteed bounds'],
+    considerations: ['More rotation overhead than unbalanced BST'],
   },
 ];
 

@@ -12,10 +12,10 @@ function NavBar() {
   const link = ({ isActive }: { isActive: boolean }) =>
     `${base} ${isActive ? active : 'hover:bg-gray-100 dark:hover:bg-gray-900'}`;
   return (
-    <header className="sticky top-0 z-10 border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur">
-      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <header className="sticky top-0 z-10 border-b border-gray-200/80 dark:border-gray-800/80 bg-white/70 dark:bg-gray-950/70 backdrop-blur supports-[backdrop-filter]:bg-white/50">
+      <div className="container max-w-6xl flex items-center justify-between h-14">
         <NavLink to="/" className="font-semibold tracking-tight">
-          DataStructViz
+          <span className="brand-gradient">DataStructViz</span>
         </NavLink>
         <nav className="flex items-center gap-2">
           <NavLink to="/" className={link}>Home</NavLink>
@@ -41,7 +41,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar />
-      <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
+      <main className="flex-1 container max-w-6xl py-6">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/learn/:topic" element={<Learn />} />
@@ -54,4 +54,3 @@ export default function App() {
     </div>
   );
 }
-

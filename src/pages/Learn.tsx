@@ -16,6 +16,7 @@ import LinkedListVisualizer from '@components/Visualizer/LinkedListVisualizer';
 import QueueVisualizer from '@components/Visualizer/QueueVisualizer';
 import GraphVisualizer from '@components/Visualizer/GraphVisualizer';
 import TrieVisualizer from '@components/Visualizer/TrieVisualizer';
+import ArrayComparison from '@components/ArrayComparison';
 
 const summaryUrl = '/content/summary.md';
 
@@ -81,6 +82,9 @@ export default function Learn() {
             </div>
           )}
         </article>
+        {t.slug === 'array' && (
+          <ArrayComparison />
+        )}
       </div>
       <aside className="space-y-3">
         <div className="rounded border border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950">
